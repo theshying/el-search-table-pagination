@@ -8,17 +8,14 @@
       :label-width="form.labelWidth ? (form.labelWidth + 'px') : ''">
       <el-input v-if="form.itemType === 'input' || form.itemType === undefined"
         v-model="params[form.modelValue]"
-        :size="form.size ? form.size : size"
-        :readonly="form.readonly"
-        :disabled="form.disabled"
-        :placeholder="form.placeholder"
-        :style="itemStyle + (form.itemWidth ? `width: ${form.itemWidth}px;` : '')" />
+        :style="itemStyle + (form.itemWidth ? `width: ${form.itemWidth}px;` : '')" 
+        v-bind="form"
+        />
       <el-select v-else-if="form.itemType === 'select'"
         v-model="params[form.modelValue]"
-        :size="form.size ? form.size : size"
-        :disabled="form.disabled"
-        :placeholder="form.placeholder"
-        :style="itemStyle + (form.itemWidth ? `width: ${form.itemWidth}px;` : '')" >
+        :style="itemStyle + (form.itemWidth ? `width: ${form.itemWidth}px;` : '')" 
+        v-bind="form"
+        >
         <el-option v-for="(option, optionIndex) in form.options" :key="optionIndex + '_local'"
           :value="(typeof option === 'object') ? option[form.valueKey || 'value'] : option"
           :label="(typeof option === 'object') ? option[form.labelKey || 'label'] : option" />
@@ -26,25 +23,22 @@
           :value="(typeof op === 'object') ? op[form.valueKey || 'value'] : op"
           :label="(typeof op === 'object') ? op[form.labelKey || 'label'] : op" />
       </el-select>
+
       <el-date-picker v-else-if="form.itemType === 'date'"
         v-model="params[form.modelValue]"
-        type="date" :placeholder="form.placeholder"
-        :size="form.size ? form.size : size"
-        :disabled="form.disabled"
-        :readonly="form.readonly"
-        :editable="form.editable"
         :style="itemStyle + (form.itemWidth ? `width: ${form.itemWidth}px;` : '')"
-        :picker-options="form.pickerOptions || {}" />
+        :picker-options="form.pickerOptions || {}" 
+        v-bind="form"
+        />
       <el-date-picker v-else-if="form.itemType === 'daterange'"
         v-model="params[form.modelValue]"
-        :size="form.size ? form.size : size"
-        type="daterange" @change="date => changeDate(date, form.prop[0], form.prop[1])"
-        :disabled="form.disabled"
-        :readonly="form.readonly"
-        :editable="form.editable"
-        :placeholder="form.placeholder"
+        type="daterange" 
+        @change="date => changeDate(date, form.prop[0], form.prop[1])"
         :style="itemStyle + (form.itemWidth ? `width: ${form.itemWidth}px;` : '')"
-        :picker-options="form.pickerOptions || {}" />
+        :picker-options="form.pickerOptions || {}" 
+        v-bind="form"
+        
+        />
     </el-form-item>
     <el-form-item label="">
       <el-button
